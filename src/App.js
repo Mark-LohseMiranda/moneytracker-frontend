@@ -9,9 +9,15 @@ export default function App() {
   const [userState, setUserState] = useState({
     username: "",
     email: "",
-    id: 0,
+    id: "",
   });
   const [token, setToken] = useState("");
+
+  const logout = (e) => {
+    localStorage.removeItem("token");
+    props.setUserState({ username: "", email: "", id: "" });
+    props.setChoice("main");
+  };
 
   useEffect(() => {
     const myToken = localStorage.getItem("token");
@@ -36,7 +42,7 @@ export default function App() {
     <div className="container">
       <div className="row justify-content-md-center">
         <div className="col text-center">
-          <Signup setToken={setToken} setUserState={setUserState}/>
+          <Signup setToken={setToken} setUserState={setUserState} />
         </div>
         <div className="col text-center">
           <Login setUserState={setUserState} setToken={setToken} />
@@ -44,11 +50,16 @@ export default function App() {
       </div>
       <div className="row justify-content-md-center">
         <div className="col text-center">
-          Username: {userState.username}<br/>
-          Email: {userState.email}<br/>
+          Username: {userState.username}
+          <br />
+          Email: {userState.email}
+          <br />
           Token: {token}
-          </div>
         </div>
+      </div>
+      <div className="row justify-content-md-center">
+        <button onClick={logout}>Logout</button>
+      </div>
     </div>
   );
 }
