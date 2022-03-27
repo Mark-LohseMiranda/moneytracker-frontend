@@ -15,8 +15,8 @@ export default function App() {
 
   const logout = (e) => {
     localStorage.removeItem("token");
-    props.setUserState({ username: "", email: "", id: "" });
-    props.setChoice("main");
+    setUserState({ username: "", email: "", id: "" });
+    setToken("");
   };
 
   useEffect(() => {
