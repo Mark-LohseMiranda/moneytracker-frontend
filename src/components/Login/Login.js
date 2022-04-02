@@ -34,6 +34,13 @@ export default function Login(props) {
             });
             props.setToken(res.data.token);
             localStorage.setItem("token", res.data.token);
+            API.getAll(res.data.token)
+            .then((res) => {
+              props.setTransactions(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           })
           .catch((err) => {
             setErrorMsg("Wrong email and/or password");
