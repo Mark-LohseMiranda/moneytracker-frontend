@@ -75,6 +75,7 @@ export default function Signup(props) {
           name="username"
           onChange={handleSignupChange}
           placeholder="Username"
+          autoComplete="username"
         />
         <br />
         <input
@@ -85,6 +86,7 @@ export default function Signup(props) {
           onChange={handleSignupChange}
           type="email"
           placeholder="Email"
+          autoComplete="email"
         />
         <br />
         <input
@@ -95,6 +97,7 @@ export default function Signup(props) {
           onChange={handleSignupChange}
           type="password"
           placeholder="Password"
+          autoComplete="new-password"
         />
         <br />
         <input
@@ -105,6 +108,7 @@ export default function Signup(props) {
           onChange={handleSignupChange}
           type="password"
           placeholder="Confirm Password"
+          autoComplete="new-password"
         />
         <br />
 

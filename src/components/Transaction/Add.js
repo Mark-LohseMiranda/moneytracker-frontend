@@ -55,22 +55,49 @@ export default function Add(props) {
   };
   return (
     <div>
-      <button
-        onClick={() => {
-          setDeposit(false);
-          setWithdrawal(!withdrawal);
-        }}
-      >
-        Withdrawal
-      </button>
-      <button
-        onClick={() => {
-          setWithdrawal(false);
-          setDeposit(!deposit);
-        }}
-      >
-        Deposit
-      </button>
+      {withdrawal ? (
+        <button
+          className="btn-primary m-3"
+          onClick={() => {
+            setDeposit(false);
+            setWithdrawal(!withdrawal);
+          }}
+        >
+          Withdrawal
+        </button>
+      ) : (
+        <button
+          className="m-3"
+          onClick={() => {
+            setDeposit(false);
+            setWithdrawal(!withdrawal);
+          }}
+        >
+          Withdrawal
+        </button>
+      )}
+      {deposit ? (
+        <button
+          className="btn-primary m-3"
+          onClick={() => {
+            setWithdrawal(false);
+            setDeposit(!deposit);
+          }}
+        >
+          Deposit
+        </button>
+      ) : (
+        <button
+        className="m-3"
+          onClick={() => {
+            setWithdrawal(false);
+            setDeposit(!deposit);
+          }}
+        >
+          Deposit
+        </button>
+      )}
+
       {withdrawal || deposit ? (
         <form onSubmit={handleAddFormSubmit}>
           <div className="row">

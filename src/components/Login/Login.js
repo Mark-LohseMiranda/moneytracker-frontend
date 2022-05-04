@@ -58,6 +58,7 @@ export default function Login(props) {
           onChange={handleLoginChange}
           type="email"
           placeholder="Email"
+          autoComplete="email"
         />
         <br />
         <input className="" id="password-login"
@@ -66,6 +67,7 @@ export default function Login(props) {
           onChange={handleLoginChange}
           type="password"
           placeholder="Password"
+          autoComplete="current-password"
         />
         <br />
         <p>{errorMsg}</p>

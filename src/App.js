@@ -15,12 +15,21 @@ export default function App() {
   });
   const [token, setToken] = useState();
   const [transactions, setTransactions] = useState();
+  const [showLogin, setShowLogin] = useState(true);
 
   const logout = (e) => {
     localStorage.removeItem("token");
     setUserState({ username: "", email: "", id: "" });
     setToken("");
     setTransactions();
+  };
+
+  const getTotal = () => {
+    let total = 0;
+    transactions?.forEach((item) => {
+      total = total + Number(item.value);
+    });
+    return total;
   };
 
   useEffect(() => {
@@ -53,24 +62,38 @@ export default function App() {
     <div className="container">
       {!userState.username ? (
         <>
-          <div className="row justify-content-md-center">
-            <div className="col text-center">
-              <Signup setToken={setToken} setUserState={setUserState} />
-            </div>
-            <div className="col text-center">
-              <Login
-                setTransactions={setTransactions}
-                setUserState={setUserState}
-                setToken={setToken}
-              />
-            </div>
-          </div>
-          <div className="row justify-content-md-center">
-            <div className="col text-center">
-              Username: {userState.username}
-              <br />
-              Email: {userState.email}
-            </div>
+          <div className="d-grid gap-2 col-6 mx-auto">
+            <button
+              className="btn btn-outline-primary btn-lg"
+              type="button"
+              onClick={() => {
+                setShowLogin(false);
+              }}
+            >
+              Signup
+            </button>
+            <button
+              className="btn btn-outline-primary btn-lg"
+              type="button"
+              onClick={() => {
+                setShowLogin(true);
+              }}
+            >
+              Login
+            </button>
+            {!showLogin ? (
+              <div className="col text-center">
+                <Signup setToken={setToken} setUserState={setUserState} />
+              </div>
+            ) : (
+              <div className="col text-center">
+                <Login
+                  setTransactions={setTransactions}
+                  setUserState={setUserState}
+                  setToken={setToken}
+                />
+              </div>
+            )}
           </div>
         </>
       ) : null}
@@ -83,12 +106,23 @@ export default function App() {
           </div>
           <div className="row">
             <div className="text-center">
-              <Add setTransactions={setTransactions} transactions={transactions} token={token} />
+              <Add
+                setTransactions={setTransactions}
+                transactions={transactions}
+                token={token}
+              />
             </div>
           </div>
           <div className="row">
+            <div className="text-center">Total: ${getTotal()}</div>
+          </div>
+          <div className="row">
             <div className="text-center">
-              <Display setTransactions={setTransactions} transactions={transactions} token={token}/>
+              <Display
+                setTransactions={setTransactions}
+                transactions={transactions}
+                token={token}
+              />
             </div>
           </div>
         </div>
