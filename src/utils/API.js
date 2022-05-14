@@ -1,8 +1,8 @@
 import axios from "axios";
 //local
-const URL_PREFIX = "http://localhost:3001";
+// const URL_PREFIX = "http://localhost:3001";
 //deploy
-// const URL_PREFIX = "https://mymoney-tracker-backend.herokuapp.com"
+const URL_PREFIX = "https://mymoney-tracker-backend.herokuapp.com"
 
 const API = {
   login: (usrData) => {
