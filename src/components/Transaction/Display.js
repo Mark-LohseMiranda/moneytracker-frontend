@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { format, parseISO } from "date-fns";
+import { Modal } from "react-bootstrap";
+import EditTransaction from "./EditTransaction";
 import API from "../../utils/API";
 import "./Display.css";
 
@@ -38,6 +40,10 @@ const useSortableData = (items, config = null) => {
 };
 
 const TransactionTable = (props) => {
+  const handleEditShow = (e) => {
+    props.setTarget(e.target.attributes["data-id"].value);
+    props.setShowEdit(true);
+  };
   const formatDate = (date) => {
     return format(parseISO(date.slice(0, 10)), "MMM do, yyyy");
   };
@@ -46,9 +52,9 @@ const TransactionTable = (props) => {
     let updateTrans = [...props.transactions];
     let update = [];
     for (let i = 0; i < updateTrans.length; i++) {
-      if (updateTrans[i].id == e.target.id) {
+      if (updateTrans[i].id === Number(e.target.id)) {
         updateTrans[i].cleared = !updateTrans[i].cleared;
-        API.cleared(
+        API.update(
           { cleared: updateTrans[i].cleared },
           e.target.id,
           props.token
@@ -111,6 +117,7 @@ const TransactionTable = (props) => {
               Cleared
             </button>
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -134,6 +141,15 @@ const TransactionTable = (props) => {
                   readOnly
                 />
               </td>
+              <td>
+                <button
+                  type="button"
+                  data-id={item.id}
+                  onClick={handleEditShow}
+                >
+                  Edit
+                </button>
+              </td>
             </tr>
           );
         })}
@@ -143,6 +159,11 @@ const TransactionTable = (props) => {
 };
 
 export default function Display({ setTransactions, transactions, token }) {
+  const [showEdit, setShowEdit] = useState(false);
+  const [target, setTarget] = useState();
+
+  const handleEditClose = () => setShowEdit(false);
+
   return (
     <div>
       {transactions ? (
@@ -150,8 +171,24 @@ export default function Display({ setTransactions, transactions, token }) {
           setTransactions={setTransactions}
           transactions={transactions}
           token={token}
+          setTarget={setTarget}
+          setShowEdit={setShowEdit}
         />
       ) : null}
+      <Modal backdrop="static" show={showEdit} onHide={handleEditClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EditTransaction
+            target={target}
+            token={token}
+            setShowEdit={setShowEdit}
+            transactions={transactions}
+            setTransactions={setTransactions}
+          />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import API from "../../utils/API";
 
 export default function Add(props) {
+   
   const [deposit, setDeposit] = useState(false);
   const [withdrawal, setWithdrawal] = useState(false);
   const [addFormState, setAddFormState] = useState({
     description: "",
     value: "",
-    date: "",
+    date: new Date().toISOString().substring(0,10),
     cleared: false,
   });
   const handleAddFormChange = (e) => {
@@ -44,7 +45,7 @@ export default function Add(props) {
         setAddFormState({
           description: "",
           value: "",
-          date: "",
+          date: new Date().toISOString().substring(0,10),
           cleared: false,
         });
       })
@@ -135,8 +136,8 @@ export default function Add(props) {
                 id="date"
                 className="form-control"
                 onChange={handleAddFormChange}
-                placeholder="Date"
                 value={addFormState.date}
+                required
               />
               <label className="form-label" htmlFor="date">
                 Date

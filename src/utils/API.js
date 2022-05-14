@@ -32,8 +32,22 @@ const API = {
       },
     });
   },
-  cleared: (data, id, tkn) => {
+  getOne: (id, tkn) => {
+    return axios.get(`${URL_PREFIX}/api/transaction/getone/${id}`, {
+      headers: {
+        Authorization: `Bearer ${tkn}`,
+      },
+    });
+  },
+  update: (data, id, tkn) => {
     return axios.put(`${URL_PREFIX}/api/transaction/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${tkn}`,
+      },
+    });
+  },
+  delete: (id, tkn) => {
+    return axios.delete(`${URL_PREFIX}/api/transaction/${id}`, {
       headers: {
         Authorization: `Bearer ${tkn}`,
       },
